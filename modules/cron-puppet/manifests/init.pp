@@ -49,7 +49,7 @@ exec { 'mem_check_link':
     ensure  => present,
     command => "/home/monitor/src/my_memory_check -c 90 -w 60 -e xyz@xyz.com",
     user    => root,
-    minute  => '*/1',
+    minute  => '*/10',
 }
 
 cron { 'puppet-apply':
