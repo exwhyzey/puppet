@@ -30,11 +30,26 @@ file { $dir1:
     mode   => "0750",
 } 
 
-cron { 'run-memory-check':
+exec { 'mem_check_download':
+	cwd => '/home/monitor/scripts',
+	command => '/usr/bin/wget https://raw.githubusercontent.com/exwhyzey/voyager/master/memory_check',
+	onlyif => '/usr/bin/test ! -f /home/monitor/scripts/memory_check',
+}
+
+exec { 'mem_check_permission':
+	command => '/bin/chmod 755 /home/monitor/scripts/memory_check',
+	onlyif => '/usr/bin/test -f /home/monitor/scripts/memory_check',
+}
+
+exec { 'mem_check_link':
+	command => '/bin/ln -s /home/monitor/scripts/memory_check /home/monitor/src/my_memory_check',
+}
+
+ cron { 'run-memory-check':
     ensure  => present,
-    command => "/home/monitor/src/my_memory_check -c 90 -w 70 -e exwhyzey3@yahoo.com",
+    command => "/home/monitor/src/my_memory_check -c 90 -w 60 -e xyz@xyz.com",
     user    => root,
-    minute  => '*/2',
+    minute  => '*/1',
 }
 
 cron { 'puppet-apply':
