@@ -1,6 +1,7 @@
 class cron-puppet {
 
-file { '/root/example_file3.txt':
+file { '/root/example_file2.txt':
+>>>>>>> 9e3d24859f09aa6f0c1ce2c8748bddd9aea78739
     ensure => "file",
     owner  => "root",
     group  => "root",
